@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/bootstrap.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+AU+QLD:wght@100..400&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="container d-flex vh-100">
+        <div class="box m-auto ">
+            <h1 class="text-center text-white mb-3">TO-DO LIST</h1>
+            <form class="row g-3 align-items-end my-4">
+                <div class="col-md-6">
+                    <label class="text-white fs-5 m-2">Task :</label>
+                    <input id="todoInput" type="text" placeholder="Add Task..." class="form-control"
+                        aria-label="Task Input" />
+                </div>
+                <div class="col-md-4">
+                    <label class="text-white fs-5 m-2">Priority :</label>
+                    <select id="search-input" class="form-control" aria-label="Priority Selection">
+                        <option value="-1">Select Priority</option>
+                        <option value="1">🟢 Low</option>
+                        <option value="2">🟡 Medium</option>
+                        <option value="3">🔴 High</option>
+                    </select>
+                </div>
+                <div class="col-md-2 text-center">
+                    <button type="button" onclick="addTask()" class="btn btn-primary p-6-12">➕Add</button>
+                </div>
+            </form>
+            <ul id="taskList" class="list-group mt-4"></ul>
+        </div>
+    </div>
+
+    <script src="./assets/js/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+
+            function getPriorityText(priority) {
+                if (priority == 1) return "🟢 Low";
+                if (priority == 2) return "🟡 Medium";
+                if (priority == 3) return "🔴 High";
+                return "";
+            }
+
+            window.addTask = function () {
+                let task = $("#todoInput").val().trim();
+                let priority = $("#search-input").val();
+
+                if (task === "" || priority == -1) {
+                    Swal.fire("Oops!", "Please enter a task and select priority!", "warning");
+                    return;
+                }
+
+                let priorityText = getPriorityText(priority);
+
+                let taskItem = `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="task-text">${task}</span><br>
+                        <small class="text-muted">${priorityText}</small>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-warning me-2 edit-btn">✏️ Edit</button>
+                        <button class="btn btn-sm btn-danger delete-btn">🗑️ Delete</button>
+                    </div>
+                </li>
+            `;
+
+                $("#taskList").append(taskItem);
+
+                $("#todoInput").val("");
+                $("#search-input").val("-1");
+            };
+
+            // Delete Task
+            $("#taskList").on("click", ".delete-btn", function () {
+                $(this).closest("li").remove();
+            });
+
+            // Edit Task
+            $("#taskList").on("click", ".edit-btn", function () {
+                let li = $(this).closest("li");
+                let taskText = li.find(".task-text").text();
+
+                Swal.fire({
+                    title: "Edit Task",
+                    input: "text",
+                    inputValue: taskText,
+                    showCancelButton: true,
+                    confirmButtonText: "Update",
+                }).then((result) => {
+                    if (result.isConfirmed && result.value.trim() !== "") {
+                        li.find(".task-text").text(result.value.trim());
+                    }
+                });
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>
