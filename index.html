@@ -71,7 +71,6 @@
                         <small class="text-muted">${priorityText}</small>
                     </div>
                     <div>
-                        <button class="btn btn-sm btn-warning me-2 edit-btn">✏️ Edit</button>
                         <button class="btn btn-sm btn-danger delete-btn">🗑️ Delete</button>
                     </div>
                 </li>
@@ -82,28 +81,9 @@
                 $("#todoInput").val("");
                 $("#search-input").val("-1");
             };
-
-            // Delete Task
+            
             $("#taskList").on("click", ".delete-btn", function () {
                 $(this).closest("li").remove();
-            });
-
-            // Edit Task
-            $("#taskList").on("click", ".edit-btn", function () {
-                let li = $(this).closest("li");
-                let taskText = li.find(".task-text").text();
-
-                Swal.fire({
-                    title: "Edit Task",
-                    input: "text",
-                    inputValue: taskText,
-                    showCancelButton: true,
-                    confirmButtonText: "Update",
-                }).then((result) => {
-                    if (result.isConfirmed && result.value.trim() !== "") {
-                        li.find(".task-text").text(result.value.trim());
-                    }
-                });
             });
         });
     </script>

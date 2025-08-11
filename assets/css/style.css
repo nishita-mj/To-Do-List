@@ -59,38 +59,3 @@ button {
     transition: 0.3s;
     margin-left: -10px;
 }
-
-.todo-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    border-radius: 10px;
-}
-
-.todo-text {
-    color: white;
-    flex: 1;
-    font-size: 16px;
-}
-
-.span-button {
-    color: white;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-.span-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.todo-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-    flex-wrap: wrap;
-}
